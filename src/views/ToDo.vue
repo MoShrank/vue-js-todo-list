@@ -62,8 +62,8 @@ export default defineComponent({
   methods: {
     checkIfIdIsValid(id: any) {
       if (
-        !Number(id) ||
-        Number(this.$route.params.id) > store.state.todos.length + 1
+        isNaN(Number(id)) ||
+        Number(this.$route.params.id) > store.state.todos.length
       ) {
         this.$router.push("/404");
       }
@@ -77,7 +77,7 @@ export default defineComponent({
       if (!store.state.todos.find((ele) => `${ele.id}` === `${this.todo.id}`)) {
         store.addTodo(this.todo);
       }
-
+      store.saveTodos();
       this.edit = !this.edit;
     },
   },

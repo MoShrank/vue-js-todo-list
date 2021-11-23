@@ -10,7 +10,12 @@
     <ul>
       <li v-for="todo in searchTodos" :key="todo.id">
         <div class="todo_container">
-          <input type="checkbox" v-model="todo.completed" :id="todo.id" />
+          <input
+            type="checkbox"
+            v-model="todo.completed"
+            @change="onCheck"
+            :id="todo.id"
+          />
           <router-link :to="'/todo/' + todo.id">
             {{ todo.title }}
           </router-link>
@@ -36,12 +41,15 @@ export default defineComponent({
   },
   methods: {
     addTodo() {
-      const id = store.state.todos.length + 1;
+      const id = store.state.todos.length;
       this.$router.push({
         name: "todo",
         params: { id },
         query: { edit: "true" },
       });
+    },
+    onCheck() {
+      store.saveTodos();
     },
   },
   computed: {

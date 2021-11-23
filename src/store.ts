@@ -1,4 +1,4 @@
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
 interface todoI {
   id: number;
@@ -30,19 +30,19 @@ const state: stateI = {
 
 const store = {
   state: reactive(state),
-  saveTodos(todos: Array<todoI>): void {
-    const todosString = JSON.stringify(todos);
+  saveTodos(): void {
+    const todosString = JSON.stringify(this.state.todos);
     storage.setItem("todos", todosString);
   },
   addTodo(todo: todoI): void {
     this.state.todos.push(todo);
-    this.saveTodos(this.state.todos);
+    this.saveTodos();
   },
   removeTodo(id: string): void {
     // remove element from array in place matching certain condition
     const idx = this.state.todos.findIndex((todo) => todo.id === Number(id));
     this.state.todos.splice(idx, 1);
-    this.saveTodos(this.state.todos);
+    this.saveTodos();
   },
 };
 
