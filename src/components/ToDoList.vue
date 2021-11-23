@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <va-input v-model="searchQuery"
+  <div class="container">
+    <va-input
+      v-model="searchQuery"
+      placeholder="Search ToDos"
       type="search"
       id="todo-search"
       aria-label="Search through todos"
@@ -8,19 +10,14 @@
     <ul>
       <li v-for="todo in searchTodos" :key="todo.id">
         <div class="todo_container">
-          <input
-            type="checkbox"
-            v-model="todo.completed"
-            v-on:change="removeTodo"
-            :id="todo.id"
-          />
+          <input type="checkbox" v-model="todo.completed" :id="todo.id" />
           <router-link :to="'/todo/' + todo.id">
             {{ todo.title }}
           </router-link>
         </div>
       </li>
     </ul>
-    <button @click="addTodo">Add Todo</button>
+    <va-button :rounded="false" @click="addTodo">Add Todo</va-button>
   </div>
 </template>
 
@@ -39,35 +36,51 @@ export default defineComponent({
   },
   methods: {
     addTodo() {
-      store.addTodo();
-    },
-    removeTodo(event: Event) {
-      store.removeTodo(event!.target!.id);
+      const id = store.state.todos.length + 1;
+      this.$router.push({
+        name: "todo",
+        params: { id },
+        query: { edit: "true" },
+      });
     },
   },
   computed: {
     searchTodos() {
+      let todos;
       if (this.searchQuery && this.searchQuery.length > 3) {
-        return search(this.todos, this.searchQuery);
+        todos = search(this.todos, this.searchQuery);
+      } else {
+        todos = this.todos;
       }
 
-      return this.todos;
+      return todos.filter((todo) => !todo.completed);
     },
   },
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+.container {
+  width: 50%;
+  padding-top: 50px;
+  margin: auto;
+
+  > *:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
 .todo_container {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   height: 40px;
-  width: 270px;
+  width: 100%;
   border: 1px solid #ccc;
   padding: 0.5em;
+  border-radius: 2px;
+  overflow: hidden;
 
   input[type="checkbox"] {
     margin-right: 0.5em;
