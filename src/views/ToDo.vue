@@ -75,7 +75,7 @@ export default defineComponent({
     },
     removeTodo() {
       store.removeTodo(`${this!.todo!.id}`);
-      this.$router.push({ name: "Home" });
+      this.$router.push("/");
     },
     editTodo() {
       if (!this.todo.title) {
@@ -90,6 +90,7 @@ export default defineComponent({
       store.updateTodo(this.todo);
       this.edit = !this.edit;
       this.error = false;
+      this.$router.push("/");
     },
   },
   watch: {
