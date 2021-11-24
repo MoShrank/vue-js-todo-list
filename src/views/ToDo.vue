@@ -64,11 +64,17 @@ export default defineComponent({
   },
   methods: {
     checkIfIdIsValid(id: any) {
+      /*
+        check that id is a valid number and that id is either a valid id within the todos array or
+        that id is a new id, where new id is max(id) + 1 or id is 0. If no id exists, then max(id) is undefined, therefore
+        we also need to check if id is 0.
+      */
       if (
         isNaN(Number(id)) ||
         (!store.state.todos.find((todo) => todo.id === Number(id)) &&
           Math.max(...store.state.todos.map((todo) => todo.id)) + 1 !==
-            Number(id))
+            Number(id) &&
+          Number(id) !== 0)
       ) {
         this.$router.push("/404");
       }
