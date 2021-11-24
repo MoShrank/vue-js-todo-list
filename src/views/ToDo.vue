@@ -17,6 +17,8 @@
       v-model="todo.title"
       :readonly="!edit"
       placeholder="title"
+      :error="error"
+      :error-message="errorMessage"
     ></va-input>
     <va-input
       :autosize="true"
@@ -39,12 +41,13 @@ export default defineComponent({
     const todo = store.state.todos.find(
       (ele) => `${ele.id}` === this.$route.params.id
     );
-
     return {
+      error: false,
+      errorMessage: "Title is required",
       edit: this.$route.query.edit === "true",
       currentId: this.$route.params.id,
       todo: todo
-        ? todo
+        ? { ...todo }
         : {
             title: "",
             description: "",
@@ -63,7 +66,9 @@ export default defineComponent({
     checkIfIdIsValid(id: any) {
       if (
         isNaN(Number(id)) ||
-        Number(this.$route.params.id) > store.state.todos.length
+        (!store.state.todos.find((todo) => todo.id === Number(id)) &&
+          Math.max(...store.state.todos.map((todo) => todo.id)) + 1 !==
+            Number(id))
       ) {
         this.$router.push("/404");
       }
@@ -73,12 +78,40 @@ export default defineComponent({
       this.$router.push({ name: "Home" });
     },
     editTodo() {
+      if (!this.todo.title) {
+        this.error = true;
+        return;
+      }
+
       //check if todo exists in store, if not add new one
       if (!store.state.todos.find((ele) => `${ele.id}` === `${this.todo.id}`)) {
         store.addTodo(this.todo);
       }
-      store.saveTodos();
+      store.updateTodo(this.todo);
       this.edit = !this.edit;
+      this.error = false;
+    },
+  },
+  watch: {
+    "$route.params": {
+      handler() {
+        const todo = store.state.todos.find(
+          (ele) => `${ele.id}` === this.$route.params.id
+        );
+
+        (this.error = false),
+          (this.edit = this.$route.query.edit === "true"),
+          (this.currentId = this.$route.params.id),
+          (this.todo = todo
+            ? { ...todo }
+            : {
+                title: "",
+                description: "",
+                completed: false,
+                id: Number(this.$route.params.id),
+              });
+      },
+      immediate: true,
     },
   },
   components: {
