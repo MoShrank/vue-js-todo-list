@@ -41,7 +41,9 @@ export default defineComponent({
   },
   methods: {
     addTodo() {
-      const id = Math.max(...store.state.todos.map((todo) => todo.id)) + 1;
+      const id = store.state.todos.length
+        ? Math.max(...store.state.todos.map((todo) => todo.id)) + 1
+        : 0;
       this.$router.push({
         name: "todo",
         params: { id },
