@@ -1,24 +1,13 @@
-# todo_list
+# ToDo List
 
-## Project setup
-```
-npm install
-```
+The ToDo list is implemented as a simple VueJs/Typescript app and [deployed on firebase](https://todo.moritz.dev).
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+ToDos are saved locally as a stringified Object in the browser's local storage.
+ToDos that are explicitly marked as done are not shown in the list while ToDo's that have been removed are actually deleted from the list.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Local Setup
+- Node (version >= v14.15.4) and npm are required.
 
-### Lints and fixes files
-```
-npm run lint
-```
+- run `npm install` in src/ directory
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- run `npm run serve` to start a local server and visit [http://localhost:8080/](http://localhost:8080/)
