@@ -31,4 +31,15 @@ export default defineComponent({
     margin-bottom: 4px;
   }
 }
+
+@media screen and (max-width: 900px) {
+  .not_found_container {
+    flex-direction: column;
+    width: 80%;
+
+    p {
+      margin-top: 20px;
+    }
+  }
+}
 </style>

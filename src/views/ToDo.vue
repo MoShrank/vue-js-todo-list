@@ -103,6 +103,10 @@ export default defineComponent({
   > *:not(:last-child) {
     margin-bottom: 10px;
   }
+
+  & > :first-child {
+    align-self: flex-start;
+  }
 }
 
 .button_container {
@@ -118,6 +122,12 @@ export default defineComponent({
 
   button {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .todo_detail_container {
+    width: 80%;
   }
 }
 </style>

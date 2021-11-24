@@ -95,7 +95,6 @@ export default defineComponent({
     margin-right: 0.5em;
     transform: scale(1.5);
   }
-
 }
 
 ul > li:first-child {
@@ -127,5 +126,11 @@ li {
 }
 a {
   color: #42b983;
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    width: 80%;
+  }
 }
 </style>

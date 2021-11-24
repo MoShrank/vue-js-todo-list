@@ -22,7 +22,6 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  align-self: flex-start;
 }
 
 .arrow_content_container {
