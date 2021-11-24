@@ -85,7 +85,8 @@ export default defineComponent({
   align-items: center;
   height: 40px;
   width: 100%;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
+  border-top: none;
   padding: 0.5em;
   border-radius: 2px;
   overflow: hidden;
@@ -94,6 +95,11 @@ export default defineComponent({
     margin-right: 0.5em;
     transform: scale(1.5);
   }
+
+}
+
+ul > li:first-child {
+  border-top: 2px solid #ccc;
 }
 
 input[type="search"] {
