@@ -84,19 +84,25 @@ export default defineComponent({
       this.$router.push("/");
     },
     editTodo() {
-      if (!this.todo.title) {
-        this.error = true;
-        return;
-      }
+      if (this.edit) {
+        if (!this.todo.title) {
+          this.error = true;
+          return;
+        }
 
-      //check if todo exists in store, if not add new one
-      if (!store.state.todos.find((ele) => `${ele.id}` === `${this.todo.id}`)) {
-        store.addTodo(this.todo);
+        //check if todo exists in store, if not add new one
+        if (
+          !store.state.todos.find((ele) => `${ele.id}` === `${this.todo.id}`)
+        ) {
+          store.addTodo(this.todo);
+        }
+        store.updateTodo(this.todo);
+        this.error = false;
+        this.edit = !this.edit;
+        this.$router.push("/");
+      } else {
+        this.edit = !this.edit;
       }
-      store.updateTodo(this.todo);
-      this.edit = !this.edit;
-      this.error = false;
-      this.$router.push("/");
     },
   },
   watch: {
