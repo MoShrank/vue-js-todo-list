@@ -44,6 +44,16 @@ const store = {
     this.state.todos.splice(idx, 1);
     this.saveTodos();
   },
+  updateTodo(updatedTodo: todoI): void {
+    this.state.todos.forEach((todo: todoI) => {
+      if (todo.id === updatedTodo.id) {
+        todo.title = updatedTodo.title;
+        todo.description = updatedTodo.description;
+        todo.completed = updatedTodo.completed;
+      }
+    });
+    this.saveTodos();
+  },
 };
 
 export { store, todoI };
